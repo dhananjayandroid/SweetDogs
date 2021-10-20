@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">SweetDogs</string>
+
+    <string name="breed">Breed: %s</string>
+    <string name="lifespan">Life span: %s</string>
+    <string name="origin">Origin: %s</string>
+    <string name="retry">Retry</string>
+    <string name="error_something_went_wrong">Something went wrong, try again</string>
+    <string name="error_tap_to_retry">ERROR !! Tap to retry.</string>
+    <string name="dogs_list">Dogs List</string>
+    <string name="dog_details">Dog Details</string>
+    <string name="dog_image">Dog Image</string>
+    <string name="love_me">Love Me</string>
+</resources>

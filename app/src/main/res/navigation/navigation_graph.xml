@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigationGraphHome"
+    app:startDestination="@id/dogListFragment">
+
+    <fragment
+        android:id="@+id/dogListFragment"
+        android:name="com.djay.sweetdogs.presentation.dogslist.DogsListFragment"
+        android:label="@string/dogs_list"
+        tools:layout="@layout/fragment_dogs_list">
+        <action
+            android:id="@+id/action_dogListFragment_to_dogDetailFragment"
+            app:destination="@id/dogDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dogDetailFragment"
+        android:name="com.djay.sweetdogs.presentation.dogdetail.DogDetailFragment"
+        android:label="@string/dog_details"
+        tools:layout="@layout/fragment_dog_detail">
+        <argument
+            android:name="dog"
+            app:argType="com.djay.sweetdogs.domain.model.Dog" />
+    </fragment>
+</navigation>
+
+    <!--<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/firstFragment">
+
+    <fragment
+        android:id="@+id/firstFragment"
+        android:name="com.djay.sweetdogs.presentation.dogslist.DogsListFragment"
+        android:label="navigation_first_fragment"
+        tools:layout="@layout/fragment_dogs_list">
+        <action
+            android:id="@+id/action_firstFragment_to_secondFragment"
+            app:destination="@id/secondFragment"
+            app:enterAnim="@anim/nav_default_enter_anim" />
+        <argument
+            android:name="dog"
+            android:defaultValue="hello world"
+            app:argType="string" />
+&lt;!&ndash;            app:argType="com.djay.sweetdogs.domain.model.Dog" />&ndash;&gt;
+    </fragment>
+    <fragment
+        android:id="@+id/secondFragment"
+        android:name="com.djay.sweetdogs.presentation.dogdetail.DogDetailFragment"
+        android:label="navigation_second_fragment"
+        tools:layout="@layout/fragment_dog_detail" />
+</navigation>
+
+    -->
