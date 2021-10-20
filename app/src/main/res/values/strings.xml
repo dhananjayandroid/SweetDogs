@@ -11,4 +11,10 @@
     <string name="dog_details">Dog Details</string>
     <string name="dog_image">Dog Image</string>
     <string name="love_me">Love Me</string>
+    <string name="categories">Categories</string>
+    <string name="sporting">Sporting</string>
+    <string name="hound">Hound</string>
+    <string name="working">Working</string>
+    <string name="terrier">Terrier</string>
+    <string name="recent">Recent</string>
 </resources>

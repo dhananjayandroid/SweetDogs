@@ -12,7 +12,9 @@
         tools:layout="@layout/fragment_dogs_list">
         <action
             android:id="@+id/action_dogListFragment_to_dogDetailFragment"
-            app:destination="@id/dogDetailFragment" />
+            app:destination="@id/dogDetailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/dogDetailFragment"
