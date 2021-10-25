@@ -11,7 +11,7 @@ interface DogsService {
     suspend fun getDogs(
         @Query("limit") limit: Int,
         @Query("page") page: Int,
-        @Query("attach_breed") breed: Int,
+        @Query("attach_breed") breed: Int
     ): Response<List<Dog>>
 
 }

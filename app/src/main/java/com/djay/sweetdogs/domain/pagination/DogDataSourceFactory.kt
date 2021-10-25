@@ -1,10 +1,10 @@
-package com.djay.sweetdogs.data.pagination
+package com.djay.sweetdogs.domain.pagination
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.djay.sweetdogs.data.pagination.DogPagingSource.Constants.BREED
-import com.djay.sweetdogs.data.pagination.DogPagingSource.Constants.PAGE_SIZE
+import com.djay.sweetdogs.domain.pagination.DogPagingSource.Constants.BREED
+import com.djay.sweetdogs.domain.pagination.DogPagingSource.Constants.PAGE_SIZE
 import com.djay.sweetdogs.domain.model.Dog
 import com.djay.sweetdogs.domain.usecases.GetDogsListUseCase
 import kotlinx.coroutines.flow.Flow

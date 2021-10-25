@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.djay.sweetdogs.data.pagination.DogDataSourceFactory
+import com.djay.sweetdogs.domain.pagination.DogDataSourceFactory
 import com.djay.sweetdogs.domain.model.Dog
 import com.djay.sweetdogs.presentation.BaseViewModel
 import com.djay.sweetdogs.utils.CoroutineContextProvider
