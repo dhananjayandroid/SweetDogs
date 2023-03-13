@@ -72,7 +72,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@id/tvDogDetailsBreed"
             app:layout_constraintTop_toBottomOf="@id/tvDogDetailsBreed"
-            tools:text="life splan" />
+            tools:text="life span" />
 
         <TextView
             android:id="@+id/tvOrigin"
@@ -86,7 +86,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@id/tvDogDetailsBreed"
             app:layout_constraintTop_toBottomOf="@id/tvDogDetailsLifeSpan"
-            tools:text="orign" />
+            tools:text="origin" />
 
         <Button
             android:id="@+id/btnAddToCart"

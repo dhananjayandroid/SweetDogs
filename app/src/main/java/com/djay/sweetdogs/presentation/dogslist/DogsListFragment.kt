@@ -9,15 +9,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.djay.sweetdogs.R
 import com.djay.sweetdogs.databinding.FragmentDogsListBinding
 import com.djay.sweetdogs.domain.model.Dog
 import com.djay.sweetdogs.presentation.dogslist.adapter.DogListAdapter
 import com.djay.sweetdogs.presentation.dogslist.adapter.PagingLoadStateAdapter
-import com.djay.sweetdogs.utils.observe
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -41,23 +41,27 @@ class DogsListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.retrieveDogs()
-        observe(viewModel.getDogs(), ::onViewStateChange)
+
         initRecyclerView()
-        initEvents()
+        collectListData()
+        onItemClicked()
+
+        dogsListAdapter.setItemClickListener(::onDogSelected)
     }
 
-    private fun initEvents() {
-        dogsListAdapter.setItemClickListener {
+    private fun onItemClicked() {
+        viewModel.selectedDog.onEach {
             findNavController().navigate(
                 DogsListFragmentDirections.actionDogListFragmentToDogDetailFragment(it)
             )
-        }
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
-    private fun onViewStateChange(data: PagingData<Dog>) {
+    private fun collectListData() {
         lifecycleScope.launch {
-            dogsListAdapter.submitData(data)
+            viewModel.dogsList.collect { dogs ->
+                dogsListAdapter.submitData(dogs)
+            }
         }
     }
 
@@ -69,5 +73,9 @@ class DogsListFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
         }
+    }
+
+    private fun onDogSelected(dog: Dog) {
+        viewModel.onDogSelected(dog)
     }
 }
