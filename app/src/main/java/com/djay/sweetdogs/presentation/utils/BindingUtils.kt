@@ -1,4 +1,4 @@
-package com.djay.sweetdogs.utils
+package com.djay.sweetdogs.presentation.utils
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter

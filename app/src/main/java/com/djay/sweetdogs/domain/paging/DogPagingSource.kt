@@ -1,8 +1,8 @@
-package com.djay.sweetdogs.domain.pagination
+package com.djay.sweetdogs.domain.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.djay.sweetdogs.domain.pagination.DogPagingSource.Constants.FIRST_PAGE
+import com.djay.sweetdogs.domain.paging.DogPagingSource.Constants.FIRST_PAGE
 import com.djay.sweetdogs.domain.common.CallErrors
 import com.djay.sweetdogs.domain.common.Result
 import com.djay.sweetdogs.domain.model.Dog

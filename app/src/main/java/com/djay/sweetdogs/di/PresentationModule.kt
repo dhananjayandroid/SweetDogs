@@ -1,7 +1,7 @@
 package com.djay.sweetdogs.di
 
-import com.djay.sweetdogs.utils.CoroutineContextProvider
-import com.djay.sweetdogs.utils.CoroutineContextProviderImp
+import com.djay.sweetdogs.presentation.utils.CoroutineContextProvider
+import com.djay.sweetdogs.presentation.utils.CoroutineContextProviderImp
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

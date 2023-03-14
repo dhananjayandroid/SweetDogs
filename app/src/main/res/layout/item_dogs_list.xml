@@ -36,7 +36,7 @@
                 android:contentDescription="@string/app_name"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_launcher_background"
-                app:image="@{dog.image.url}"
+                app:image="@{dog.image}"
                 app:shapeAppearanceOverlay="@style/circleImageViewStyle" />
 
             <TextView

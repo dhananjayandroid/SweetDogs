@@ -2,7 +2,7 @@ package com.djay.sweetdogs.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.djay.sweetdogs.utils.CoroutineContextProvider
+import com.djay.sweetdogs.presentation.utils.CoroutineContextProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch

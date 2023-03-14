@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 
-package com.djay.sweetdogs.utils
+package com.djay.sweetdogs.presentation.utils
 
 
 import android.view.View

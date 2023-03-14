@@ -1,7 +1,8 @@
-package com.djay.sweetdogs
+package com.djay.sweetdogs.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.djay.sweetdogs.R
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
