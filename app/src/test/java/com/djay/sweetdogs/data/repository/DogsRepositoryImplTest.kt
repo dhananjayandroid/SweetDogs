@@ -1,6 +1,6 @@
 package com.djay.sweetdogs.data.repository
 
-import com.djay.sweetdogs.FakeDataProvider
+import com.djay.sweetdogs.utils.FakeDataProvider
 import com.djay.sweetdogs.data.mapper.DogMapper
 import com.djay.sweetdogs.data.model.DogResponse
 import com.djay.sweetdogs.data.remote.api.DogsService
@@ -28,8 +28,7 @@ class DogsRepositoryImplTest {
         val pageNumber = 1
         val breed = 1
         val response: Response<List<DogResponse>> = mockk()
-        val dogResponses =
-            listOf(FakeDataProvider.fakeDogResponse1, FakeDataProvider.fakeDogResponse2)
+        val dogResponses = FakeDataProvider.fakeDogsResponseList
         val fakeDogsList = DogMapper().mapFromEntityList(dogResponses)
         coEvery { dogsService.getDogsResponse(pageSize, pageNumber, breed) } returns response
         every { response.isSuccessful } returns true

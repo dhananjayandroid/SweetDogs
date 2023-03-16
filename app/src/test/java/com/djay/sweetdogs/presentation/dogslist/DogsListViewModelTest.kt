@@ -23,7 +23,6 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class DogsListViewModelTest {
 
-    // Use Mockk instead of Mockito for mocking objects
     @MockK
     lateinit var getDogsListUseCase: GetDogsListUseCase
 
