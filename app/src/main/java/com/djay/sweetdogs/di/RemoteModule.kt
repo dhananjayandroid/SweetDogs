@@ -6,15 +6,15 @@ import com.djay.sweetdogs.data.remote.api.ServiceFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
-@InstallIn(SingletonComponent::class)
+@InstallIn(ViewModelComponent::class)
 object RemoteModule {
 
     @Provides
-    @Singleton
     fun provideDogService(): DogsService {
         return ServiceFactory.create(BuildConfig.DEBUG, BuildConfig.BASE_URL)
     }

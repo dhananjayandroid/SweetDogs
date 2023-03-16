@@ -27,6 +27,10 @@ class DogsListViewModel @Inject constructor(
     val selectedDog: SharedFlow<Dog> = _selectedDog
 
     init {
+        retrieveDogsList()
+    }
+
+    private fun retrieveDogsList() {
         launchCoroutineIO {
             getDogsListUseCase.invoke(
                 GetDogsListUseCase.Params(

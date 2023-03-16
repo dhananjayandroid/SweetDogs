@@ -2,18 +2,19 @@ package com.djay.sweetdogs.di
 
 import com.djay.sweetdogs.data.repository.DogsRepositoryImpl
 import com.djay.sweetdogs.domain.repository.DogsRepository
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.FragmentComponent
+import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
-@InstallIn(SingletonComponent::class)
-object DataModule {
+@InstallIn(ViewModelComponent::class)
+interface DataModule {
 
-    @Provides
-    @Singleton
-    fun provideDogsRepository(dogsRepository: DogsRepositoryImpl): DogsRepository = dogsRepository
-
+    @Binds
+    fun bindDogsRepository(impl: DogsRepositoryImpl): DogsRepository
 }

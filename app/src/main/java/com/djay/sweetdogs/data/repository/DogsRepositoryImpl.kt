@@ -7,6 +7,7 @@ import com.djay.sweetdogs.domain.common.CallErrors
 import com.djay.sweetdogs.domain.common.Result
 import com.djay.sweetdogs.domain.model.Dog
 import com.djay.sweetdogs.domain.repository.DogsRepository
+import dagger.hilt.android.scopes.FragmentScoped
 import retrofit2.Response
 import javax.inject.Inject
 

@@ -43,7 +43,7 @@ class DogsListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initRecyclerView()
-        collectListData()
+        collectDogsList()
         onItemClicked()
 
         dogsListAdapter.setItemClickListener(::onDogSelected)
@@ -57,7 +57,7 @@ class DogsListFragment : Fragment() {
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
-    private fun collectListData() {
+    private fun collectDogsList() {
         lifecycleScope.launch {
             viewModel.dogsList.collect { dogs ->
                 dogsListAdapter.submitData(dogs)
