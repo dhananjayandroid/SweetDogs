@@ -1,6 +1,6 @@
-package com.djay.sweetdogs.data.model
+package com.djay.sweetdogs.data.remote.model
 
-data class DogResponse(
+data class DogDTO(
     val bred_for: String,
     val breed_group: String,
     val country_code: String,
@@ -28,7 +28,7 @@ data class DogResponse(
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as DogResponse
+        other as DogDTO
 
         if (bred_for != other.bred_for) return false
         if (breed_group != other.breed_group) return false

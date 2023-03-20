@@ -1,17 +1,15 @@
 package com.djay.sweetdogs.presentation.dogslist
 
 import androidx.paging.PagingData
-import androidx.paging.cachedIn
 import com.djay.sweetdogs.domain.model.Dog
 import com.djay.sweetdogs.domain.paging.DogPagingSource
 import com.djay.sweetdogs.domain.usecases.GetDogsListUseCase
 import com.djay.sweetdogs.presentation.BaseViewModel
-import com.djay.sweetdogs.presentation.utils.CoroutineContextProvider
+import com.djay.sweetdogs.presentation.mapper.mapResultToDogsUIStateFlow
+import com.djay.sweetdogs.presentation.state.UIState
+import com.djay.sweetdogs.utils.CoroutineContextProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,9 +18,9 @@ class DogsListViewModel @Inject constructor(
     private val getDogsListUseCase: GetDogsListUseCase
 ) : BaseViewModel(contextProvider) {
 
-    private val _dogsList = MutableStateFlow<PagingData<Dog>>(PagingData.empty())
-    var dogsList: StateFlow<PagingData<Dog>> = _dogsList
-
+    private val _dogsList: MutableStateFlow<UIState<PagingData<Dog>>> =
+        MutableStateFlow(UIState.Loading(true))
+    var dogsList: StateFlow<UIState<PagingData<Dog>>> = _dogsList.asStateFlow()
     private val _selectedDog = MutableSharedFlow<Dog>()
     val selectedDog: SharedFlow<Dog> = _selectedDog
 
@@ -32,14 +30,14 @@ class DogsListViewModel @Inject constructor(
 
     private fun retrieveDogsList() {
         launchCoroutineIO {
-            getDogsListUseCase.invoke(
-                GetDogsListUseCase.Params(
-                    DogPagingSource.Constants.PAGE_SIZE,
-                    DogPagingSource.Constants.BREED
+            val responseResult =
+                getDogsListUseCase(
+                    GetDogsListUseCase.Params(
+                        DogPagingSource.PAGE_SIZE,
+                        DogPagingSource.BREED
+                    )
                 )
-            ).cachedIn(this).collect {
-                _dogsList.value = it
-            }
+            _dogsList.emitAll(responseResult.mapResultToDogsUIStateFlow())
         }
     }
 

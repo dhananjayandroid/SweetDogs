@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 
-package com.djay.sweetdogs.presentation.utils
+package com.djay.sweetdogs.utils
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData

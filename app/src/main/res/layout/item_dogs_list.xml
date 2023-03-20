@@ -64,7 +64,7 @@
                 android:layout_marginTop="4dp"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:text='@{@string/breed(dog.breed_group ?? "")}'
+                android:text='@{@string/breed(dog.breedGroup ?? "")}'
                 android:textColor="@android:color/black"
                 android:textSize="14sp"
                 tools:text="Breed: Toy" />
@@ -78,7 +78,7 @@
                 android:layout_marginTop="4dp"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:text='@{@string/lifespan(dog.life_span ?? "")}'
+                android:text='@{@string/lifespan(dog.lifeSpan ?? "")}'
                 android:textColor="@android:color/black"
                 android:textSize="14sp"
                 tools:text="Life span: 10-12 years" />

@@ -7,7 +7,7 @@ import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.djay.sweetdogs.databinding.LoadStateFooterBinding
-import com.djay.sweetdogs.presentation.utils.makeVisible
+import com.djay.sweetdogs.utils.makeVisible
 
 class PagingLoadStateAdapter(private val retryFunction: () -> Unit) :
     LoadStateAdapter<PagingLoadStateAdapter.LoadStateViewHolder>() {

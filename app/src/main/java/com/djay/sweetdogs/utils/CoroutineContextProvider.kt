@@ -1,4 +1,4 @@
-package com.djay.sweetdogs.presentation.utils
+package com.djay.sweetdogs.utils
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

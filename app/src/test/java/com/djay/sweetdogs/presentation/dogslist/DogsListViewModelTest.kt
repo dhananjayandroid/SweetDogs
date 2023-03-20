@@ -3,17 +3,20 @@ package com.djay.sweetdogs.presentation.dogslist
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import app.cash.turbine.test
+import com.djay.sweetdogs.common.Result
 import com.djay.sweetdogs.domain.paging.FakeDogPagingSource
 import com.djay.sweetdogs.domain.usecases.GetDogsListUseCase
-import com.djay.sweetdogs.presentation.utils.CoroutineContextProvider
+import com.djay.sweetdogs.presentation.state.UIState
+import com.djay.sweetdogs.utils.FakeDataProvider
 import com.djay.sweetdogs.utils.TestDispatcherProvider
-import io.mockk.MockKAnnotations
 import io.mockk.coEvery
-import io.mockk.impl.annotations.MockK
+import io.mockk.mockk
 import junit.framework.TestCase.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.test.runTest
-import org.junit.Before
+import org.hamcrest.CoreMatchers.instanceOf
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.*
@@ -23,38 +26,27 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class DogsListViewModelTest {
 
-    @MockK
-    lateinit var getDogsListUseCase: GetDogsListUseCase
+    private val getDogsListUseCase: GetDogsListUseCase = mockk()
 
-    private lateinit var coroutineContextProvider: CoroutineContextProvider
-
-    // Create an instance of the ViewModel
-    private lateinit var dogsListViewModel: DogsListViewModel
-
-    @Before
-    fun setup() {
-        // Initialize Mockk
-        MockKAnnotations.init(this)
-
-        // Create a new instance of the ViewModel with the mocked use case
-        coroutineContextProvider = TestDispatcherProvider()
-        dogsListViewModel = DogsListViewModel(coroutineContextProvider, getDogsListUseCase)
-    }
+    private val coroutineContextProvider = TestDispatcherProvider()
 
     @Test
-    fun `test get dogs list`() {
+    fun `given valid params, when retrieveDogsList is called, then dogsList should contain data`() {
         runTest {
+            // GIVEN
             val pager = Pager(PagingConfig(pageSize = 20)) {
-                FakeDogPagingSource(any())
-            }
+                FakeDogPagingSource(FakeDataProvider.fakeDogsList)
+            }.flow.map { Result.Success(it) }
+            coEvery { getDogsListUseCase.invoke(any()) } returns pager
 
-            coEvery { getDogsListUseCase.invoke(any()) } returns pager.flow
+            // When
+           val dogsListViewModel = DogsListViewModel(coroutineContextProvider, getDogsListUseCase)
 
+            // Then
             dogsListViewModel.dogsList.test {
-                assertNotNull(awaitItem())
-                cancelAndIgnoreRemainingEvents()
+                assertThat(awaitItem(), instanceOf(UIState.SuccessWithData::class.java))
+                cancelAndConsumeRemainingEvents()
             }
         }
     }
-
 }

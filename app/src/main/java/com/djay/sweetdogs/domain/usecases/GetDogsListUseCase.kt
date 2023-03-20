@@ -1,28 +1,21 @@
 package com.djay.sweetdogs.domain.usecases
 
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import com.djay.sweetdogs.common.Result
 import com.djay.sweetdogs.domain.model.Dog
 import com.djay.sweetdogs.domain.paging.DogPagingSource
 import com.djay.sweetdogs.domain.repository.DogsRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-typealias GetDogsListBaseUseCase = BaseUseCase<GetDogsListUseCase.Params, Flow<PagingData<Dog>>>
+typealias GetDogsListBaseUseCase = BaseUseCase<GetDogsListUseCase.Params, Flow<Result<PagingData<Dog>>>>
 
 class GetDogsListUseCase @Inject constructor(
     private val dogsRepository: DogsRepository
 ) : GetDogsListBaseUseCase {
 
     override suspend operator fun invoke(params: Params) =
-        Pager(
-            config = PagingConfig(pageSize = DogPagingSource.Constants.PAGE_SIZE, enablePlaceholders = false),
-            pagingSourceFactory = {
-                DogPagingSource { pageNumber, pageSize ->
-                    dogsRepository.getDogs(pageSize, pageNumber, DogPagingSource.Constants.BREED)
-                }
-            }
-        ).flow
+        dogsRepository.getDogs(params.pageSize, 1, DogPagingSource.BREED)
+
     data class Params(val pageSize: Int, val breed: Int)
 }

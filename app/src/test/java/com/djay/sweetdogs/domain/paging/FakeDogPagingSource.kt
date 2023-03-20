@@ -15,7 +15,7 @@ class FakeDogPagingSource(private val dogs: List<Dog>) : PagingSource<Int, Dog>(
         return LoadResult.Page(
             data = page,
             prevKey = if (pageNumber == 1) null else pageNumber - 1,
-            nextKey = if (pageNumber * params.loadSize >= dogs.size) null else pageNumber + 1
+            nextKey = (pageNumber + 1).takeIf { (pageNumber * params.loadSize) < dogs.size }
         )
     }
 

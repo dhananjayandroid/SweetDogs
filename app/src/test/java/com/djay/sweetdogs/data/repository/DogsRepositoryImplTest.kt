@@ -1,61 +1,77 @@
 package com.djay.sweetdogs.data.repository
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import app.cash.turbine.test
+import com.djay.sweetdogs.common.CallErrors
+import com.djay.sweetdogs.common.Result
+import com.djay.sweetdogs.domain.paging.FakeDogPagingSource
 import com.djay.sweetdogs.utils.FakeDataProvider
-import com.djay.sweetdogs.data.mapper.DogMapper
-import com.djay.sweetdogs.data.model.DogResponse
-import com.djay.sweetdogs.data.remote.api.DogsService
-import com.djay.sweetdogs.domain.common.CallErrors
-import com.djay.sweetdogs.domain.common.Result
 import io.mockk.coEvery
-import io.mockk.every
 import io.mockk.mockk
+import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.assertEquals
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.test.runTest
+import org.hamcrest.CoreMatchers.instanceOf
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
-import retrofit2.Response
 
-@Suppress("DEPRECATION")
 @OptIn(ExperimentalCoroutinesApi::class)
 class DogsRepositoryImplTest {
-    private val dogsService: DogsService = mockk()
-    private val dogsRepository: DogsRepositoryImpl = DogsRepositoryImpl(dogsService)
+
+    private val dogsRepositoryDelegate: DogsRepositoryDelegate = mockk()
+    private val dogsRepository: DogsRepositoryImpl = DogsRepositoryImpl(dogsRepositoryDelegate)
 
     @Test
-    fun `getDogs returns Success`() = runBlockingTest {
-        // Given
-        val pageSize = 10
-        val pageNumber = 1
-        val breed = 1
-        val response: Response<List<DogResponse>> = mockk()
-        val dogResponses = FakeDataProvider.fakeDogsResponseList
-        val fakeDogsList = DogMapper().mapFromEntityList(dogResponses)
-        coEvery { dogsService.getDogsResponse(pageSize, pageNumber, breed) } returns response
-        every { response.isSuccessful } returns true
-        every { response.body() } returns dogResponses
+    fun `Given valid parameters, when getDogs is called, then return success result`() {
+        runTest {
+            // Given
+            val pageSize = 10
+            val pageNumber = 1
+            val breed = 1
+            val pager = Pager(PagingConfig(pageSize)) {
+                FakeDogPagingSource(FakeDataProvider.fakeDogsList)
+            }.flow.map { Result.Success(it) }
 
-        // When
-        val result = dogsRepository.getDogs(pageSize, pageNumber, breed)
+            coEvery { dogsRepositoryDelegate.getDogs(pageSize, pageNumber, breed) } returns pager
 
-        // Then
-        assertEquals(Result.Success(fakeDogsList), result)
+            // When
+            val result = dogsRepository.getDogs(pageSize, pageNumber, breed)
+
+            // Then
+            result.test {
+                assertThat(awaitItem(), instanceOf(Result.Success::class.java))
+                cancelAndConsumeRemainingEvents()
+            }
+        }
     }
 
 
     @Test
-    fun `getDogs throws Exception`() = runBlockingTest {
-        // Arrange
-        val pageSize = 20
-        val pageNumber = 1
-        val breed = 1
-        val error = Exception("Network Error")
-        coEvery { dogsService.getDogsResponse(pageSize, pageNumber, breed) } throws error
-        val expected = Result.Error(CallErrors.ErrorException(error))
-        // Act
-        val result = dogsRepository.getDogs(pageSize, pageNumber, breed)
-        // Assert
-        assertEquals(expected, result)
+    fun `given invalid parameters, when getDogs is called, then an error should be returned`() {
+        runTest {
+            // Given
+            val pageSize = 20
+            val pageNumber = -1
+            val breed = 1
+            val error = Exception("Code: 400 - Error: Bad Request")
+            val expected = Result.Error(CallErrors.ErrorException(error))
+
+            coEvery { dogsRepositoryDelegate.getDogs(pageSize, pageNumber, breed) } returns flowOf(
+                expected
+            )
+
+            // When
+            val result = dogsRepository.getDogs(pageSize, pageNumber, breed)
+
+            // Then
+            result.test {
+                val item = awaitItem()
+                assertThat(item, instanceOf(Result.Error::class.java))
+                assertEquals(expected, item)
+                cancelAndConsumeRemainingEvents()
+            }
+        }
     }
-
-
 }

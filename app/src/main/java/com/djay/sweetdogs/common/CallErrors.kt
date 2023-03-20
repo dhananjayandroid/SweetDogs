@@ -1,4 +1,4 @@
-package com.djay.sweetdogs.domain.common
+package com.djay.sweetdogs.common
 
 sealed class CallErrors {
     object ErrorEmptyData : CallErrors()

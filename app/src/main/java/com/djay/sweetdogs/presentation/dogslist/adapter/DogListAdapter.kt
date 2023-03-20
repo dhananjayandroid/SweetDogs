@@ -39,9 +39,7 @@ class DogListAdapter @Inject constructor() :
 
     override fun onBindViewHolder(holder: DogViewHolder, position: Int) {
         val dog = getItem(position)
-        if (dog != null) {
-            holder.bind(dog)
-        }
+        dog?.let { holder.bind(dog) }
     }
 
     inner class DogViewHolder(private val binding: ItemDogsListBinding) :

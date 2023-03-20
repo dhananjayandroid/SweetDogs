@@ -51,7 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text='@{@string/breed(dog.breed_group ?? "")}'
+            android:text='@{@string/breed(dog.breedGroup ?? "")}'
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@android:color/black"
             app:layout_constraintEnd_toEndOf="@id/tvDogDetailsName"
@@ -65,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text='@{@string/lifespan(dog.life_span ?? "")}'
+            android:text='@{@string/lifespan(dog.lifeSpan ?? "")}'
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@android:color/black"
             app:layout_constraintEnd_toEndOf="@id/tvDogDetailsBreed"
@@ -88,18 +88,5 @@
             app:layout_constraintTop_toBottomOf="@id/tvDogDetailsLifeSpan"
             tools:text="origin" />
 
-        <Button
-            android:id="@+id/btnAddToCart"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:padding="20dp"
-            android:text="@string/love_me"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

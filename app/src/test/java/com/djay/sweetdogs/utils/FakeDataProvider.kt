@@ -1,14 +1,14 @@
 package com.djay.sweetdogs.utils
 
-import com.djay.sweetdogs.data.mapper.DogMapper
-import com.djay.sweetdogs.data.model.DogResponse
-import com.djay.sweetdogs.data.model.Height
-import com.djay.sweetdogs.data.model.Image
-import com.djay.sweetdogs.data.model.Weight
+import com.djay.sweetdogs.data.remote.model.DogDTO
+import com.djay.sweetdogs.data.remote.model.Height
+import com.djay.sweetdogs.data.remote.model.Image
+import com.djay.sweetdogs.data.remote.model.Weight
+import com.djay.sweetdogs.data.utils.toDogList
 
 object FakeDataProvider {
 
-    val fakeDogResponse1 = DogResponse(
+    private val fakeDogDTO1 = DogDTO(
         bred_for = "Companionship",
         breed_group = "Toy",
         country_code = "US",
@@ -30,7 +30,7 @@ object FakeDataProvider {
         weight = Weight(imperial = "14 - 18", metric = "6 - 8")
     )
 
-    val fakeDogResponse2 = DogResponse(
+    private val fakeDogDTO2 = DogDTO(
         bred_for = "Hunting",
         breed_group = "Hound",
         country_code = "GB",
@@ -52,15 +52,10 @@ object FakeDataProvider {
         weight = Weight(imperial = "20 - 25", metric = "9 - 11")
     )
 
-    val fakeDogsResponseList = listOf(
-        fakeDogResponse1,
-        fakeDogResponse2
+    private val fakeDogsResponseList = listOf(
+        fakeDogDTO1,
+        fakeDogDTO2
     )
 
-    val fakeDogsList = DogMapper().mapFromEntityList(
-        listOf(
-            fakeDogResponse1,
-            fakeDogResponse2
-        )
-    )
+    val fakeDogsList = fakeDogsResponseList.toDogList()
 }

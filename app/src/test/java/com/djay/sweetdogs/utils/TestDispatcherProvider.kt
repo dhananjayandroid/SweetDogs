@@ -1,6 +1,5 @@
 package com.djay.sweetdogs.utils
 
-import com.djay.sweetdogs.presentation.utils.CoroutineContextProvider
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
