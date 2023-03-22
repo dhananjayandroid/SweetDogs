@@ -1,10 +1,6 @@
 package com.djay.sweetdogs.utils
 
-import com.djay.sweetdogs.data.remote.model.DogDTO
-import com.djay.sweetdogs.data.remote.model.Height
-import com.djay.sweetdogs.data.remote.model.Image
-import com.djay.sweetdogs.data.remote.model.Weight
-import com.djay.sweetdogs.data.utils.toDogList
+import com.djay.sweetdogs.data.remote.model.*
 
 object FakeDataProvider {
 
@@ -52,7 +48,7 @@ object FakeDataProvider {
         weight = Weight(imperial = "20 - 25", metric = "9 - 11")
     )
 
-    private val fakeDogsResponseList = listOf(
+    val fakeDogsResponseList = listOf(
         fakeDogDTO1,
         fakeDogDTO2
     )

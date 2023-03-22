@@ -5,6 +5,8 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.djay.sweetdogs.R
 import com.djay.sweetdogs.databinding.ItemDogsListBinding
 import com.djay.sweetdogs.domain.model.Dog
 import javax.inject.Inject
@@ -45,8 +47,12 @@ class DogListAdapter @Inject constructor() :
     inner class DogViewHolder(private val binding: ItemDogsListBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Dog) {
-            binding.dog = item
-            binding.executePendingBindings()
+            val context = binding.root.context
+            binding.tvName.text = item.name
+            binding.tvBreed.text = context.getString(R.string.breed, item.breedGroup.orEmpty())
+            binding.tvLife.text = context.getString(R.string.lifespan, item.lifeSpan.orEmpty())
+            binding.tvOrigin.text = context.getString(R.string.origin, item.origin.orEmpty())
+            Glide.with(context).load(item.image).into(binding.ivDog)
             binding.root.setOnClickListener {
                 onItemClickListener?.let { itemClick ->
                     itemClick(item)

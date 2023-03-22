@@ -14,7 +14,7 @@ class PagingLoadStateAdapter(private val retryFunction: () -> Unit) :
 
     override fun onCreateViewHolder(parent: ViewGroup, loadState: LoadState): LoadStateViewHolder {
         val binding =
-            LoadStateFooterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            LoadStateFooterBinding.inflate(LayoutInflater.from(parent.context))
         return LoadStateViewHolder(binding)
     }
 

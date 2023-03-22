@@ -1,10 +1,7 @@
 package com.djay.sweetdogs.di
 
 import com.djay.sweetdogs.data.remote.api.DogsService
-import com.djay.sweetdogs.data.remote.mapper.DogsResponseMapper
-import com.djay.sweetdogs.data.remote.mapper.ResponseMapper
-import com.djay.sweetdogs.data.remote.model.DogDTO
-import com.djay.sweetdogs.data.repository.DogsRepositoryDelegate
+import com.djay.sweetdogs.data.repository.ResultHandler
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,7 +13,7 @@ import retrofit2.Retrofit
 
 @Module
 @InstallIn(ViewModelComponent::class)
-object RemoteModule {
+object ViewModelModule {
 
     @Provides
     fun provideDogService(retrofit: Retrofit): DogsService {
@@ -29,16 +26,7 @@ object RemoteModule {
     }
 
     @Provides
-    fun providesDogsRepositoryDelegate(
-        dogsService: DogsService,
-        mapper: ResponseMapper<List<DogDTO>>,
-        coroutineScope: CoroutineScope
-    ): DogsRepositoryDelegate {
-        return DogsRepositoryDelegate(dogsService, mapper, coroutineScope)
-    }
-
-    @Provides
-    fun providesDogsResponseMapper(): ResponseMapper<List<DogDTO>> {
-        return DogsResponseMapper()
+    fun providesResultHandler(): ResultHandler {
+        return ResultHandler()
     }
 }
