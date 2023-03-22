@@ -24,23 +24,17 @@ class DogsListViewModel @Inject constructor(
         retrieveDogsList()
     }
 
-    private fun retrieveDogsList() {
-        viewModelScope.launch {
-            getDogsListUseCase.invoke(BREED).collect {
-                when(it) {
-                    is Result.Success ->  _dogsList.value = it.data
-                    is Result.Error ->  _dogsList.value = emptyList()
-                }
-
+    private fun retrieveDogsList() = viewModelScope.launch {
+        getDogsListUseCase.invoke(BREED).collect {
+            when (it) {
+                is Result.Success -> _dogsList.value = it.data
+                is Result.Error -> _dogsList.value = emptyList()
             }
+
         }
     }
 
-    fun onDogSelected(dog: Dog) {
-        viewModelScope.launch {
-            _selectedDog.emit(dog)
-        }
-    }
+    fun onDogSelected(dog: Dog) = viewModelScope.launch { _selectedDog.emit(dog) }
 
     private companion object {
         const val BREED = 0

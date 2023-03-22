@@ -49,17 +49,16 @@ class DogsListAdapter @Inject constructor() :
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DogViewHolder {
-        val binding = ItemDogsListBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DogViewHolder =
+        DogViewHolder(
+            ItemDogsListBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
         )
-        return DogViewHolder(binding)
-    }
 
-    override fun onBindViewHolder(holder: DogViewHolder, position: Int) {
-        val dog = getItem(position)
-        dog?.let { holder.bind(getItem(position)) }
-    }
+
+    override fun onBindViewHolder(holder: DogViewHolder, position: Int) =
+        holder.bind(getItem(position))
 }

@@ -32,10 +32,7 @@ open class DogsListFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentDogsListBinding.inflate(inflater)
-        return binding.rootView
-    }
+    ): View = FragmentDogsListBinding.inflate(inflater).apply { binding = this }.rootView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -47,15 +44,14 @@ open class DogsListFragment : Fragment() {
         dogsListAdapter.setItemClickListener(::onDogSelected)
     }
 
-    private fun onItemClicked() {
+    private fun onItemClicked() =
         viewModel.selectedDog.onEach {
             findNavController().navigate(
                 DogsListFragmentDirections.actionDogListFragmentToDogDetailFragment(it)
             )
         }.launchIn(viewLifecycleOwner.lifecycleScope)
-    }
 
-    private fun collectDogsList() {
+    private fun collectDogsList() =
         lifecycleScope.launch {
             viewModel.dogsList
                 .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
@@ -63,7 +59,6 @@ open class DogsListFragment : Fragment() {
                     dogsListAdapter.submitList(it)
                 }
         }
-    }
 
     private fun initRecyclerView() = binding.recyclerViewDogs.apply {
         adapter = dogsListAdapter
