@@ -13,8 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.djay.sweetdogs.databinding.FragmentDogsListBinding
 import com.djay.sweetdogs.domain.model.Dog
-import com.djay.sweetdogs.presentation.dogslist.adapter.DogListAdapter
-import com.djay.sweetdogs.presentation.dogslist.adapter.PagingLoadStateAdapter
+import com.djay.sweetdogs.presentation.dogslist.adapter.DogsListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn
@@ -27,7 +26,7 @@ open class DogsListFragment : Fragment() {
     private val viewModel: DogsListViewModel by viewModels()
 
     @Inject
-    lateinit var dogsListAdapter: DogListAdapter
+    lateinit var dogsListAdapter: DogsListAdapter
     private lateinit var binding: FragmentDogsListBinding
 
     override fun onCreateView(
@@ -61,15 +60,13 @@ open class DogsListFragment : Fragment() {
             viewModel.dogsList
                 .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
                 .collectLatest {
-                    dogsListAdapter.submitData(it)
+                    dogsListAdapter.submitList(it)
                 }
         }
     }
 
     private fun initRecyclerView() = binding.recyclerViewDogs.apply {
-        adapter = dogsListAdapter.withLoadStateFooter(
-            footer = PagingLoadStateAdapter { dogsListAdapter.retry() }
-        )
+        adapter = dogsListAdapter
         layoutManager = LinearLayoutManager(requireContext())
         setHasFixedSize(true)
     }

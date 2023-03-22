@@ -6,9 +6,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import retrofit2.Retrofit
 
 @Module
@@ -18,11 +15,6 @@ object ViewModelModule {
     @Provides
     fun provideDogService(retrofit: Retrofit): DogsService {
         return retrofit.create(DogsService::class.java)
-    }
-
-    @Provides
-    fun providesCoroutineScope(): CoroutineScope {
-        return CoroutineScope(SupervisorJob() + Dispatchers.Default)
     }
 
     @Provides

@@ -1,10 +1,8 @@
 package com.djay.sweetdogs.presentation.dogslist
 
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
 import app.cash.turbine.test
-import com.djay.sweetdogs.domain.paging.FakeDogPagingSource
+import com.djay.sweetdogs.common.CallErrors
+import com.djay.sweetdogs.common.Result
 import com.djay.sweetdogs.domain.usecases.GetDogsListUseCase
 import com.djay.sweetdogs.utils.FakeDataProvider
 import com.djay.sweetdogs.utils.MainCoroutineRule
@@ -12,9 +10,8 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import junit.framework.TestCase.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
-import org.hamcrest.CoreMatchers.instanceOf
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -34,17 +31,39 @@ class DogsListViewModelTest {
     fun `given valid params, when retrieveDogsList is called, then dogsList should contain data`() {
         runTest {
             // GIVEN
-            val pager = Pager(PagingConfig(pageSize = 20)) {
-                FakeDogPagingSource(FakeDataProvider.fakeDogsList)
-            }.flow
-            coEvery { getDogsListUseCase.invoke(any()) } returns pager
+            val expectedList = FakeDataProvider.fakeDogsList
+            val resultFlow = flowOf(Result.Success(expectedList))
+
+            coEvery { getDogsListUseCase.invoke(any()) } returns resultFlow
 
             // When
-           val dogsListViewModel = DogsListViewModel(getDogsListUseCase)
+            val dogsListViewModel = DogsListViewModel(getDogsListUseCase)
 
             // Then
             dogsListViewModel.dogsList.test {
-                assertThat(awaitItem(), instanceOf(PagingData::class.java))
+                assertEquals(0, awaitItem().size)
+                assertEquals(expectedList, awaitItem())
+                cancelAndConsumeRemainingEvents()
+            }
+        }
+    }
+
+    @Test
+    fun `given invalid params, when retrieveDogsList is called, then dogsList should not contain data`() {
+        runTest {
+            // GIVEN
+            val expectedList = FakeDataProvider.fakeDogsList
+            val resultFlow =
+                flowOf(Result.Error(CallErrors.ErrorException(Throwable("Invalid Request"))))
+
+            coEvery { getDogsListUseCase.invoke(any()) } returns resultFlow
+
+            // When
+            val dogsListViewModel = DogsListViewModel(getDogsListUseCase)
+
+            // Then
+            dogsListViewModel.dogsList.test {
+                assertTrue(awaitItem().isEmpty())
                 cancelAndConsumeRemainingEvents()
             }
         }

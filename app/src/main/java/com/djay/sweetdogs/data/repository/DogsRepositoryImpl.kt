@@ -14,14 +14,10 @@ class DogsRepositoryImpl @Inject constructor(
 ) :
     DogsRepository {
 
-    override suspend fun getDogs(pageSize: Int, pageNumber: Int, breed: Int): Result<List<Dog>> {
+    override suspend fun getDogs(breed: Int): Result<List<Dog>> {
         return try {
             resultHandler.handleResult(
-                dogsService.getDogsResponse(
-                    pageSize,
-                    pageNumber,
-                    breed
-                )
+                dogsService.getDogsResponse(breed)
             ) { it.toDogList() }
         } catch (e: Exception) {
             Result.Error(CallErrors.ErrorException(e))

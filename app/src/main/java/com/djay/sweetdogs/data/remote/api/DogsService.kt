@@ -9,8 +9,6 @@ interface DogsService {
 
     @GET("/v1/breeds?")
     suspend fun getDogsResponse(
-        @Query("limit") limit: Int,
-        @Query("page") page: Int,
         @Query("attach_breed") breed: Int
     ): Response<List<DogDTO>>
 
