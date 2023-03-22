@@ -25,6 +25,7 @@ object FakeDataProvider {
         temperament = "Charming, Mischievous, Loving",
         weight = Weight(imperial = "14 - 18", metric = "6 - 8")
     )
+    val fakeDog = fakeDogDTO1.toDog()
 
     private val fakeDogDTO2 = DogDTO(
         bred_for = "Hunting",

@@ -26,7 +26,6 @@ class GetDogsListUseCaseTest {
             // Given
             val breed = 0
             val expected = Result.Success(FakeDataProvider.fakeDogsList)
-
             coEvery { dogsRepository.getDogs(breed) } returns expected
 
             // When
@@ -46,7 +45,6 @@ class GetDogsListUseCaseTest {
             // Given
             val breed = -1
             val expected = Result.Error(CallErrors.ErrorException(Throwable("Invalid Request")))
-
             coEvery { dogsRepository.getDogs(breed) } returns expected
 
             // When

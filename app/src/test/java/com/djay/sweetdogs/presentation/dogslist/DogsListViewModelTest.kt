@@ -33,7 +33,6 @@ class DogsListViewModelTest {
             // GIVEN
             val expectedList = FakeDataProvider.fakeDogsList
             val resultFlow = flowOf(Result.Success(expectedList))
-
             coEvery { getDogsListUseCase.invoke(any()) } returns resultFlow
 
             // When
@@ -52,10 +51,8 @@ class DogsListViewModelTest {
     fun `given invalid params, when retrieveDogsList is called, then dogsList should not contain data`() {
         runTest {
             // GIVEN
-            val expectedList = FakeDataProvider.fakeDogsList
             val resultFlow =
                 flowOf(Result.Error(CallErrors.ErrorException(Throwable("Invalid Request"))))
-
             coEvery { getDogsListUseCase.invoke(any()) } returns resultFlow
 
             // When
@@ -64,6 +61,24 @@ class DogsListViewModelTest {
             // Then
             dogsListViewModel.dogsList.test {
                 assertTrue(awaitItem().isEmpty())
+                cancelAndConsumeRemainingEvents()
+            }
+        }
+    }
+
+    @Test
+    fun `given a dog is selected, when onDogSelected is called, then selectedDog return selected dog`() {
+        runTest {
+            // GIVEN
+            val expected = FakeDataProvider.fakeDog
+
+            // When
+            val dogsListViewModel = DogsListViewModel(getDogsListUseCase)
+            dogsListViewModel.onDogSelected(expected)
+
+            // Then
+            dogsListViewModel.selectedDog.test {
+                assertEquals(expected, awaitItem())
                 cancelAndConsumeRemainingEvents()
             }
         }
