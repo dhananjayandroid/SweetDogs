@@ -24,14 +24,14 @@ class DogsListAdapter @Inject constructor() :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Dog) {
             val context = binding.root.context
-            binding.tvName.text = item.name
-            binding.tvBreed.text = context.getString(R.string.breed, item.breedGroup.orEmpty())
-            binding.tvLife.text = context.getString(R.string.lifespan, item.lifeSpan.orEmpty())
-            binding.tvOrigin.text = context.getString(R.string.origin, item.origin.orEmpty())
-            Glide.with(context).load(item.image).into(binding.ivDog)
-            binding.root.setOnClickListener {
-                onItemClickListener?.let { itemClick ->
-                    itemClick(item)
+            binding.run {
+                tvName.text = item.name
+                tvBreed.text = context.getString(R.string.breed, item.breedGroup.orEmpty())
+                tvLife.text = context.getString(R.string.lifespan, item.lifeSpan.orEmpty())
+                tvOrigin.text = context.getString(R.string.origin, item.origin.orEmpty())
+                Glide.with(context).load(item.image).into(ivDog)
+                root.setOnClickListener {
+                    onItemClickListener?.let { itemClick -> itemClick(item) }
                 }
             }
         }

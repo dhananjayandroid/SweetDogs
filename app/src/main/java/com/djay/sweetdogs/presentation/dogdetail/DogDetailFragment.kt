@@ -20,21 +20,17 @@ class DogDetailFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentDogDetailBinding.inflate(inflater)
-        return binding.rootView
-    }
+    ): View = FragmentDogDetailBinding.inflate(inflater).apply { binding = this }.rootView
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        displayData(arguments.dog)
-    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) = displayData(arguments.dog)
 
     private fun displayData(dog: Dog) {
-        binding.tvDogDetailsName.text = dog.name
-        binding.tvDogDetailsBreed.text = getString(R.string.breed, dog.breedGroup.orEmpty())
-        binding.tvDogDetailsLifeSpan.text = getString(R.string.lifespan, dog.lifeSpan.orEmpty())
-        binding.tvOrigin.text = getString(R.string.origin, dog.origin.orEmpty())
-        Glide.with(this).load(dog.image).into(binding.ivDogDetails)
+        binding.run {
+            tvDogDetailsName.text = dog.name
+            tvDogDetailsBreed.text = getString(R.string.breed, dog.breedGroup.orEmpty())
+            tvDogDetailsLifeSpan.text = getString(R.string.lifespan, dog.lifeSpan.orEmpty())
+            tvOrigin.text = getString(R.string.origin, dog.origin.orEmpty())
+            Glide.with(this@DogDetailFragment).load(dog.image).into(ivDogDetails)
+        }
     }
 }
